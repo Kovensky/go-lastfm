@@ -20,11 +20,25 @@ func (e *LastFMError) Error() string {
 	return strings.Trim(e.Message, "\n ")
 }
 
+// Known image sizes
+const (
+	SmallImageSize      = "small"
+	MediumImageSize     = "medium"
+	LargeImageSize      = "large"
+	ExtraLargeImageSize = "extralarge"
+)
+
+type Image struct {
+	URL  string `xml:",innerxml"`
+	Size string `xml:"size,attr"`
+}
+
 type Artist struct {
-	Name      string `xml:"name"`
-	PlayCount int    `xml:"playcount"` // Currently is always 0, except when part of the result of GetUserTopArtists.
-	MBID      string `xml:"mbid"`
-	URL       string `xml:"url"`
+	Name      string   `xml:"name"`
+	PlayCount int      `xml:"playcount"` // Currently is always 0, except when part of the result of GetUserTopArtists.
+	MBID      string   `xml:"mbid"`
+	URL       string   `xml:"url"`
+	Images    []*Image `xml:"image"`
 }
 
 // Less detailed struct returned in GetRecentTracks.
@@ -35,11 +49,12 @@ type Album struct {
 
 // More detailed struct returned in GetTrackInfo.
 type AlbumInfo struct {
-	TrackNo int    `xml:"position,attr"`
-	Name    string `xml:"title"`
-	Artist  string `xml:"artist"`
-	MBID    string `xml:"mbid"`
-	URL     string `xml:"url"`
+	TrackNo int      `xml:"position,attr"`
+	Name    string   `xml:"title"`
+	Artist  string   `xml:"artist"`
+	MBID    string   `xml:"mbid"`
+	URL     string   `xml:"url"`
+	Images  []*Image `xml:"image"`
 }
 
 type Track struct {

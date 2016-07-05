@@ -1,11 +1,11 @@
-package lastfm_test
+package lastfm
 
 import (
 	"fmt"
 	"testing"
 )
 
-func Expect(T *testing.T, item string, expected, actual interface{}) bool {
+func testExpect(T *testing.T, item string, expected, actual interface{}) bool {
 	if expected != actual {
 		switch expected.(type) {
 		case string, fmt.Stringer:
